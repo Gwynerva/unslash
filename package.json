@@ -1,0 +1,47 @@
+{
+  "name": "unslash",
+  "version": "1.0.1",
+  "type": "module",
+  "description": "🤬 No more pain with slashes!",
+  "keywords": [
+    "slash",
+    "path",
+    "path-normalization",
+    "normalize",
+    "url",
+    "trailing-slash",
+    "leading-slash",
+    "router",
+    "base-path",
+    "cross-platform",
+    "windows",
+    "utilities"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gwynerva/unslash.git"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc --project ./tsconfig.src.json",
+    "prepack": "bun run build",
+    "format": "bun prettier --write .",
+    "test": "bun vitest run"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}
