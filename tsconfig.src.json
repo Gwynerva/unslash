@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "strict": true,
+    "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
+    "emitDeclarationOnly": true,
     "declaration": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,

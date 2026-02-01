@@ -1,4 +1,6 @@
-export type SlashFlag = 't' | 'l' | 'f' | 'c';
+export type SlashBooleanFlag = 't' | 'l' | 'f';
+export type SlashPlainFlag = 'c';
+export type SlashFlag = SlashBooleanFlag | SlashPlainFlag;
 
 export declare const unslash: unique symbol;
 type link = 'https://github.com/Gwynerva/unslash';
@@ -13,6 +15,11 @@ export type DuplicateFlagError<F extends string> = {
   SlashPatternError: `Flag "${F}" is used more than once or both negated and non-negated`;
 };
 
+export type InvalidNegationError<F extends string> = {
+  readonly [unslash]: link;
+  SlashPatternError: `Flag "${F}" cannot be negated`;
+};
+
 export type ValidateSlashPattern<
   S extends string,
   Pos extends string = never,
@@ -21,9 +28,11 @@ export type ValidateSlashPattern<
   // "!x..."
   S extends `!${infer L}${infer R}`
     ? L extends SlashFlag
-      ? L extends Pos | Neg
-        ? DuplicateFlagError<L>
-        : ValidateSlashPattern<R, Pos, Neg | L>
+      ? L extends SlashBooleanFlag
+        ? L extends Pos | Neg
+          ? DuplicateFlagError<L>
+          : ValidateSlashPattern<R, Pos, Neg | L>
+        : InvalidNegationError<L>
       : UnknownFlagError<`!${L}`>
     : // "x..."
       S extends `${infer L}${infer R}`

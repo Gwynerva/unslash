@@ -1,6 +1,6 @@
 {
   "name": "unslash",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "description": "🤬 No more pain with slashes!",
   "keywords": [
@@ -11,10 +11,8 @@
     "url",
     "trailing-slash",
     "leading-slash",
-    "router",
     "base-path",
     "cross-platform",
-    "windows",
     "utilities"
   ],
   "license": "MIT",
@@ -34,7 +32,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc --project ./tsconfig.src.json",
+    "build": "rm -rf dist && tsc -p ./tsconfig.src.json && esbuild src/**/*.ts --outdir=dist --minify --sourcemap --format=esm",
     "prepack": "bun run build",
     "format": "bun prettier --write .",
     "test": "bun vitest run"
@@ -42,6 +40,7 @@
   "devDependencies": {
     "prettier": "^3.8.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "esbuild": "^0.27.2"
   }
 }

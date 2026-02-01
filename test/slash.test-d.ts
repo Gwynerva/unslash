@@ -17,7 +17,7 @@ describe('slash', () => {
     slash('!x', 'path', 'to', 'file');
     // @ts-expect-error 'l' is duplicated
     slash('ll', 'path', 'to', 'file');
-    // @ts-expect-error 'c' is duplicated
+    // @ts-expect-error 'c' is not allowed to be negated
     slash('c!c', 'path', 'to', 'file');
   });
 });

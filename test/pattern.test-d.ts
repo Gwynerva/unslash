@@ -2,6 +2,7 @@ import { describe, expectTypeOf, it } from 'vitest';
 
 import type {
   DuplicateFlagError,
+  InvalidNegationError,
   SlashPattern,
   UnknownFlagError,
 } from '@src/pattern.js';
@@ -14,12 +15,16 @@ describe('SlashPattern', () => {
     expectTypeOf<SlashPattern<''>>().toEqualTypeOf<''>();
   });
 
-  it('should error for unknown flags', () => {
+  it('should produce compile-error for invalid flags', () => {
     expectTypeOf<SlashPattern<'x'>>().toEqualTypeOf<UnknownFlagError<'x'>>();
     expectTypeOf<SlashPattern<'!y'>>().toEqualTypeOf<UnknownFlagError<'!y'>>();
     expectTypeOf<SlashPattern<'ll'>>().toEqualTypeOf<DuplicateFlagError<'l'>>();
+    expectTypeOf<SlashPattern<'cc'>>().toEqualTypeOf<DuplicateFlagError<'c'>>();
+    expectTypeOf<SlashPattern<'!c'>>().toEqualTypeOf<
+      InvalidNegationError<'c'>
+    >();
     expectTypeOf<SlashPattern<'c!c'>>().toEqualTypeOf<
-      DuplicateFlagError<'c'>
+      InvalidNegationError<'c'>
     >();
   });
 });

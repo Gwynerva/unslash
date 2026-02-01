@@ -1,6 +1,7 @@
 # `/` unslash
 
 Stop wasting your life on slash normalization.<br />
+Works everywhere ("everywhere" means in browsers too).<br />
 Zero dependencies because why would I need any?
 
 ## Install
@@ -49,6 +50,25 @@ slash('tlfc', 'http://example.com', 'path', 'to', 'file');
 // → 'http://example.com/path/to/file/'
 ```
 
+You can import shorthand `s` versions (as default or named):
+
+```ts
+import s, { s } from 'unslash';
+
+s('t', 'path', 'to', 'file');
+// → 'path/to/file/'
+```
+
+If you need to create a reusable function with a fixed pattern, use `slashFn` or `sfn`:
+
+```ts
+import { slashFn, sfn } from 'unslash';
+const normalizePath = sfn('tlfc');
+
+normalizePath('path\\to\\file');
+// → '/path/to/file/'
+```
+
 ## Pattern Flags
 
 - `t` / `!t` — Add/remove **T**railing slash
@@ -61,6 +81,6 @@ slash('tlfc', 'http://example.com', 'path', 'to', 'file');
 Yeah, I know.<br/>
 I don’t give a shit.<br />
 I was too lazy to look for them and made my own.<br />
-Made with GPT help. Cry about it.
+Created with GPT help. Cry about it.
 
 _It’d be cool if this package got popular and made me rich._

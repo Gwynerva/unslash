@@ -1,14 +1,14 @@
 import type { SlashPattern } from './pattern.js';
 
 /**
- * Creates a string formatter based on the given slash pattern.
+ * Formats a string based on the given slash pattern.
  * @param pattern
  * A string of letters or their negations (prefixed with "!").
  * Each letter represents a specific formatting rule:
  * - `t` | `!t`: Ensure trailing slash is added | removed.
  * - `l` | `!l`: Ensure leading slash is added | removed.
  * - `f` | `!f`: Force forward | backward slashes.
- * - `c` | `!c`: Collapse multiple slashes into a single slash | Does nothing.
+ * - `c` Collapse multiple adjacent slashes into a single slash.
  *
  * Example patterns:
  * - `"tlfc"`: Ensure leading and trailing slashes, force forward slashes, collapse multiple slashes.
@@ -114,3 +114,8 @@ export function slash<S extends string>(
 
   return protocol + joined;
 }
+
+/**
+ * Shortened version of `slash`.
+ */
+export const s = slash;
