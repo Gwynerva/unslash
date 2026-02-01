@@ -101,6 +101,10 @@ describe('unslash', () => {
       // if force forward, replaces \ with /, then collapses //
       expect(slash(/fc/, 'a/\\b')).toBe('a/b');
     });
+
+    it('collapses empty strings', () => {
+      expect(slash(/c/, 'a//////b', '', 'c')).toBe('a/b/c');
+    });
   });
 
   describe('flag overrides (left-to-right)', () => {
