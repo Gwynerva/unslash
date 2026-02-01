@@ -1,6 +1,6 @@
 {
   "name": "unslash",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "type": "module",
   "description": "🤬 No more pain with slashes!",
   "keywords": [
@@ -38,9 +38,10 @@
     "test": "bun vitest run"
   },
   "devDependencies": {
+    "@types/node": "^25.1.0",
+    "esbuild": "^0.27.2",
     "prettier": "^3.8.1",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18",
-    "esbuild": "^0.27.2"
+    "vitest": "^4.0.18"
   }
 }

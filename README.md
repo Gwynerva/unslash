@@ -13,68 +13,88 @@ npm install unslash
 ## Usage
 
 ```ts
-import { slash } from 'unslash';
+import { s, slash } from 'unslash';
+
+// Just join some paths. No magic.
+s('path', 'to', 'file');
+// → 'path/to/file'
 
 // Need a trailing slash? Done.
-slash('t', 'path', 'to', 'file');
+s(/t/, 'path', 'to', 'file');
 // → 'path/to/file/'
 
 // Don’t want it? Gone.
-slash('!t', 'path/to/file/');
+s(/!t/, 'path/to/file/');
 // → 'path/to/file'
 
 // Want a leading slash? Here you go.
-slash('l', 'path', 'to', 'file');
+s(/l/, 'path', 'to', 'file');
 // → '/path/to/file'
 
 // Need to collapse that mess? Fixed.
-slash('c', 'path///to', 'this//file');
+s(/c/, 'path///to', 'this//file');
 // → 'path/to/this/file'
 
 // Want to force forward slashes? Me too.
-slash('f', 'path\\to', 'this/file');
+s(/f/, 'path\\to', 'this/file');
 // → 'path/to/this/file'
 
 // Need Windows paths? What is wrong with you?!
-slash('!f', 'path', 'to', 'file');
+s(/!f/, 'path', 'to', 'file');
 // → 'path\to\file'
 
 // Combine them. Because you can.
-slash('tlfc', 'path\\\\to\\file');
+s(/tlfc/, 'path\\\\to\\file');
 // → '/path/to/file/'
-slash('!t!l!fc', '/path///to/file/');
+s(/!t!l!fc/, '/path///to/file/');
 // → 'path\to\file'
 
 // Your precious protocols are safe — don’t worry.
-slash('tlfc', 'http://example.com', 'path', 'to', 'file');
+s(/tlfc/, 'http://example.com', 'path', 'to', 'file');
 // → 'http://example.com/path/to/file/'
 ```
 
-You can import shorthand `s` versions (as default or named):
+There are three ways to use the library:
 
 ```ts
-import s, { s } from 'unslash';
+import unslash, { s, slash } from 'unslash';
+```
 
-s('t', 'path', 'to', 'file');
+For all DRY lovers like me, you can create reusable formatters:
+
+```ts
+// Create a formatter
+const normalize = s(/fc/); // Force forward, collapse
+
+// Use it
+normalize('path\\to\\file');
+// → 'path/to/file'
+
+// Extend it on the fly if you're feeling spicy
+normalize(/t/, 'path\\to\\file');
 // → 'path/to/file/'
 ```
 
-If you need to create a reusable function with a fixed pattern, use `slashFn` or `sfn`:
+For the lazy ones, `snormalize` (or `sn`) is already pre-configured with `/fc/` (Force forward + Collapse):
 
 ```ts
-import { slashFn, sfn } from 'unslash';
-const normalizePath = sfn('tlfc');
+import { sn } from 'unslash';
 
-normalizePath('path\\to\\file');
-// → '/path/to/file/'
+sn('path\\to//file');
+// → 'path/to/file'
+
+sn(/t/, 'path\\to//file');
+// → 'path/to/file/'
 ```
 
 ## Pattern Flags
 
+Use these in your regex literal (e.g., `/tfc/`):
+
 - `t` / `!t` — Add/remove **T**railing slash
 - `l` / `!l` — Add/remove **L**eading slash
 - `f` / `!f` — Force **F**orward slashes / backward slashes
-- `c` — **C**ollapse multiple slashes (yes, you’re right — `!c` doesn’t do shit)
+- `c` / `!c` — **C**ollapse multiple slashes / Don't collapse
 
 ## But Gwynerva, there are libraries for this
 
