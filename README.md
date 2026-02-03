@@ -13,7 +13,7 @@ npm install unslash
 ## Usage
 
 ```ts
-import { s, slash } from 'unslash';
+import unslash, { s, slash } from 'unslash';
 
 // Just join some paths. No magic.
 s('path', 'to', 'file');
@@ -52,12 +52,6 @@ s(/!t!l!fc/, '/path///to/file/');
 // Your precious protocols are safe — don’t worry.
 s(/tlfc/, 'http://example.com', 'path', 'to', 'file');
 // → 'http://example.com/path/to/file/'
-```
-
-There are three ways to use the library:
-
-```ts
-import unslash, { s, slash } from 'unslash';
 ```
 
 For all DRY lovers like me, you can create reusable formatters:
